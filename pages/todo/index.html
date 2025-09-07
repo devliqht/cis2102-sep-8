@@ -1,10 +1,94 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>JS To Do Exercise</title>
+	<title>Task Management</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	 <link rel="stylesheet" href="../../css/main.css" />
+	<script src="https://kit.fontawesome.com/1a04278299.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<h1>Hello World</h1>
+	<div class="workspace">
+		<div class="workspace-header">
+			<div class="workspace-title">
+				<h1><i class="fas fa-clipboard-list"></i> Task Management</h1>
+				<p>Organize and track your tasks</p>
+				<div class="user-info" id="userInfo" style="margin-top: 10px; font-size: 14px; color: #666;">
+					<span id="currentUserName">Loading user...</span>
+				</div>
+			</div>
+			<div class="workspace-actions">
+				<div class="filter-controls">
+					<select id="filterStatus" class="input filter-input">
+						<option value="active">Active Tasks</option>
+						<option value="inactive">Inactive Tasks</option>
+					</select>
+					<input type="number" id="filterUserId" class="input filter-input" placeholder="User ID" value="3" min="1">
+					<button class="btn btn-outline" id="filterBtn">
+						<i class="fas fa-sync-alt"></i>
+						Refresh
+					</button>
+				</div>
+				<button class="btn btn-primary" id="newTaskBtn">
+					<i class="fas fa-plus"></i>
+					New Task
+				</button>
+			</div>
+		</div>
+
+		<div class="task-input-section" id="taskInputSection" style="display: none;">
+			<div class="input-card">
+				<div class="input-group">
+					<input type="text" id="todoInput" class="input" placeholder="Task name..." maxlength="100">
+					<input type="text" id="todoDescription" class="input" placeholder="Task description..." maxlength="255">
+					<select id="statusSelect" class="input">
+						<option value="active">Active</option>
+						<option value="inactive">Inactive</option>
+					</select>
+				</div>
+				<div class="input-actions">
+					<button id="cancelBtn" class="btn btn-outline">Cancel</button>
+					<button id="addBtn" class="btn btn-primary">Add Task</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="table-container">
+			<div class="table-header">
+				<div class="table-cell header-cell">
+					<input type="checkbox" id="selectAll" class="checkbox">
+				</div>
+				<div class="table-cell header-cell">Task</div>
+				<div class="table-cell header-cell">Status</div>
+				<div class="table-cell header-cell">Modified</div>
+				<div class="table-cell header-cell">Actions</div>
+			</div>
+
+			<div class="table-body" id="todoList">
+				<div class="empty-state" id="emptyState">
+					<div class="empty-icon"><i class="fas fa-tasks fa-3x"></i></div>
+					<h3>No tasks yet</h3>
+					<p>Create your first task to get started</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../scripts/helpers/utils.js"></script>
+	<script src="../../scripts/helpers/helpers.js"></script>
+	<script src="../../scripts/FetchTasks.js"></script>
+	<script src="../../scripts/AddTask.js"></script>
+	<script>
+		$(document).ready(() => {
+			const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+			if (currentUser.first_name && currentUser.last_name) {
+				$('#currentUserName').text(`Welcome, ${currentUser.first_name} ${currentUser.last_name}`);
+			} else if (currentUser.email) {
+				$('#currentUserName').text(`Welcome, ${currentUser.email}`);
+			} else {
+				$('#currentUserName').text('Welcome, User');
+			}
+		});
+	</script>
 </body>
+</html>
