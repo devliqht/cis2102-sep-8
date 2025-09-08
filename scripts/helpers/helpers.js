@@ -5,7 +5,7 @@ function getStatusBadge(status) {
         'completed': { class: 'status-completed', text: 'Completed', icon: '<i class="fas fa-flag-checkered"></i>' }
     };
     const statusInfo = statusMap[status] || statusMap['active'];
-    return `<span class="status-badge ${statusInfo.class}">
+    return `<span class="status-badge ${statusInfo.class} clickable-status" title="Click to toggle status">
         <span>${statusInfo.icon}</span>
         ${statusInfo.text}
     </span>`;
